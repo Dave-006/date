@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta property="og:title" content="Kommst du am Samstag mit?">
+<meta property="og:description" content="Ein Bon für ein Date in den Riem Arcaden – Samstag, 31.10.2026.">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+</style>
+<title>Riem Arcaden Date</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=DM+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one thermal-paper receipt centred on a dotted gift-wrap backdrop; question + buttons are printed on the receipt */
+:root{
+  --backdrop:#D93A63;
+  --backdrop-dot:#E5587D;
+  --paper:#FCFBF7;
+  --ink:#1F1D24;
+  --ink-soft:#6E6874;
+  --stamp:#C8102E;
+  --gold:#F2B33D;
+  --font-display:"Bagel Fat One","Arial Black",Impact,system-ui,sans-serif;
+  --font-mono:"DM Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+html{height:100%}
+body{
+  min-height:100%;
+  box-sizing:border-box;
+  background-color:var(--backdrop);
+  background-image:radial-gradient(var(--backdrop-dot) 2px, transparent 2.6px);
+  background-size:22px 22px;
+  color:var(--ink);
+  font-family:var(--font-mono);
+  font-size:13.5px;
+  line-height:1.5;
+  display:grid;
+  place-items:center;
+  padding-block:40px;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));
+  padding-right:max(16px, env(safe-area-inset-right, 0px));
+  overflow-x:hidden;
+}
+
+.slip{
+  width:min(100%, 380px);
+  filter:drop-shadow(0 18px 22px rgb(70 0 25 / .35));
+  animation:print .8s cubic-bezier(.2,.8,.2,1) both;
+}
+@keyframes print{from{transform:translateY(-16px)}to{transform:none}}
+
+.paper{
+  position:relative;
+  background:var(--paper);
+  padding:26px 22px 22px;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+.paper::before,.paper::after{
+  content:"";
+  position:absolute;
+  left:0; right:0;
+  height:8px;
+  background:
+    linear-gradient(135deg, var(--paper) 25%, transparent 25%) 0 0 / 16px 16px repeat-x,
+    linear-gradient(225deg, var(--paper) 25%, transparent 25%) 0 0 / 16px 16px repeat-x;
+}
+.paper::after{bottom:-8px}
+.paper::before{top:-8px; transform:scaleY(-1)}
+
+.head{text-align:center; display:flex; flex-direction:column; gap:2px}
+.brand{font-family:var(--font-display); font-size:30px; line-height:1.05; letter-spacing:.02em; margin:0 0 4px}
+.small{color:var(--ink-soft); font-size:12px; margin:0}
+
+.rule{border:0; border-top:1.5px dashed var(--ink-soft); margin:0; opacity:.7}
+
+.meta{display:grid; grid-template-columns:1fr auto; gap:0 12px; font-size:12px; color:var(--ink-soft)}
+.meta span:nth-child(even){text-align:right}
+
+.items{display:flex; flex-direction:column; gap:5px; margin:0; padding:0; list-style:none; font-variant-numeric:tabular-nums}
+.items li{display:grid; grid-template-columns:minmax(0,auto) 1fr auto; align-items:baseline; gap:6px}
+.items .lbl{min-width:0}
+.items .dots{border-bottom:1.5px dotted var(--ink-soft); opacity:.6; transform:translateY(-4px); min-width:12px}
+.items .amt{text-align:right; white-space:nowrap}
+
+.total{display:flex; justify-content:space-between; align-items:baseline; font-weight:500; font-size:16px; letter-spacing:.04em}
+.tax{display:flex; justify-content:space-between; font-size:12px; color:var(--ink-soft); margin-top:-10px}
+
+.ask{display:flex; flex-direction:column; align-items:center; gap:16px; padding-block:6px}
+.q{font-family:var(--font-display); font-weight:400; font-size:clamp(30px, 8.5vw, 38px); line-height:1.05; text-align:center; text-wrap:balance; margin:0}
+.btns{display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:14px; min-height:64px}
+
+button{font:inherit; color:inherit; cursor:pointer; -webkit-tap-highlight-color:transparent}
+button:focus-visible{outline:3px solid var(--stamp); outline-offset:3px}
+
+.ja{
+  --grow:1;
+  font-family:var(--font-display);
+  font-size:calc(22px * var(--grow));
+  letter-spacing:.06em;
+  background:var(--ink);
+  color:var(--paper);
+  border:0;
+  border-radius:6px;
+  padding:.4em 1.25em .45em;
+  transition:font-size .25s cubic-bezier(.3,1.6,.5,1), transform .15s;
+}
+.ja:hover{transform:translateY(-2px)}
+.ja:active{transform:translateY(1px)}
+
+.nein{
+  font-family:var(--font-mono);
+  font-size:15px;
+  background:transparent;
+  border:1.5px solid var(--ink);
+  border-radius:6px;
+  padding:9px 16px;
+  white-space:nowrap;
+  touch-action:none;
+}
+.nein.loose{
+  position:fixed;
+  z-index:50;
+  background:var(--paper);
+  box-shadow:0 8px 18px rgb(70 0 25 / .3);
+  transition:left .18s ease-out, top .18s ease-out;
+}
+.hint{min-height:1.5em; margin:0; font-size:12px; color:var(--ink-soft); text-align:center}
+
+.done{display:flex; flex-direction:column; align-items:center; gap:10px; text-align:center; padding-block:6px}
+.big{font-family:var(--font-display); font-size:clamp(32px, 9vw, 40px); line-height:1; margin:0}
+.when{margin:0; font-weight:500}
+.tries{margin:0; font-size:12px; color:var(--ink-soft)}
+.label{margin:6px 0 0; font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-soft)}
+.chips{display:flex; flex-wrap:wrap; justify-content:center; gap:8px}
+.chip{
+  font-variant-numeric:tabular-nums;
+  background:transparent;
+  border:1.5px solid var(--ink);
+  border-radius:6px;
+  padding:7px 14px;
+}
+.chip[aria-pressed="true"]{background:var(--ink); color:var(--paper)}
+.meet{margin:4px 0 0; max-width:34ch; text-wrap:balance}
+.meet strong{font-weight:500; background:var(--gold); padding:0 4px}
+
+.stamp{
+  position:absolute;
+  left:50%; top:30%;
+  transform:translate(-50%,-50%) rotate(-13deg);
+  font-family:var(--font-display);
+  font-size:34px;
+  letter-spacing:.06em;
+  color:var(--stamp);
+  border:4px double var(--stamp);
+  border-radius:8px;
+  padding:4px 16px 6px;
+  opacity:.88;
+  mix-blend-mode:multiply;
+  pointer-events:none;
+  animation:thump .35s cubic-bezier(.2,.9,.3,1.3) both;
+}
+@keyframes thump{
+  from{transform:translate(-50%,-50%) rotate(-13deg) scale(2.2); opacity:0}
+  to{transform:translate(-50%,-50%) rotate(-13deg) scale(1); opacity:.88}
+}
+
+.foot{text-align:center; display:flex; flex-direction:column; align-items:center; gap:8px}
+.barcode{display:flex; height:44px; align-items:stretch}
+.barcode span{background:var(--ink); display:block}
+.code{font-size:11px; letter-spacing:.3em; color:var(--ink-soft); margin:-4px 0 0}
+.ps{font-size:12px; margin:4px 0 0; color:var(--ink-soft)}
+
+#confetti{position:fixed; inset:0; width:100%; height:100%; pointer-events:none; z-index:60}
+
+@media (prefers-reduced-motion: reduce){
+  .slip,.stamp{animation:none}
+  .ja,.nein.loose{transition:none}
+}
+</style>
+</head>
+<body>
+
+<canvas id="confetti" aria-hidden="true"></canvas>
+
+<main class="slip">
+  <div class="paper">
+    <div class="head">
+      <p class="brand">RIEM ARCADEN</p>
+      <p class="small">Willy-Brandt-Platz 5 · 81829 München</p>
+      <p class="small">U2 Messestadt West</p>
+    </div>
+
+    <hr class="rule">
+
+    <div class="meta">
+      <span>Bon 3110</span><span>Sa 31.10.2026</span>
+      <span>Kasse 01</span><span>Bedient: ich</span>
+    </div>
+
+    <hr class="rule">
+
+    <ul class="items">
+      <li><span class="lbl">1× Date mit mir</span><span class="dots"></span><span class="amt">0,00</span></li>
+      <li><span class="lbl">1× Bummeln</span><span class="dots"></span><span class="amt">inkl.</span></li>
+      <li><span class="lbl">1× Essen, du suchst aus</span><span class="dots"></span><span class="amt">geht auf mich</span></li>
+      <li><span class="lbl">1× Eis oder Kaffee</span><span class="dots"></span><span class="amt">auch</span></li>
+      <li><span class="lbl">∞× schlechte Witze</span><span class="dots"></span><span class="amt">gratis</span></li>
+      <li><span class="lbl">1× Händchenhalten</span><span class="dots"></span><span class="amt">optional</span></li>
+    </ul>
+
+    <hr class="rule">
+
+    <div class="total"><span>SUMME</span><span>unbezahlbar</span></div>
+    <div class="tax"><span>davon MwSt. 0 %</span><span>0,00</span></div>
+
+    <hr class="rule">
+
+    <section id="ask" class="ask" aria-labelledby="q">
+      <h1 id="q" class="q">Kommst du am Samstag mit?</h1>
+      <div class="btns">
+        <button id="ja" class="ja" type="button">JA</button>
+        <button id="nein" class="nein" type="button">Nein</button>
+      </div>
+      <p id="hint" class="hint" aria-live="polite"></p>
+    </section>
+
+    <section id="done" class="done" aria-live="polite" hidden>
+      <p class="big">Abgemacht!</p>
+      <p class="when">Samstag, 31.10.2026 · Riem Arcaden</p>
+      <p id="tries" class="tries"></p>
+      <p class="label">Wann passt’s dir?</p>
+      <div class="chips" role="group" aria-label="Uhrzeit wählen">
+        <button class="chip" type="button" data-time="13 Uhr" aria-pressed="false">13:00</button>
+        <button class="chip" type="button" data-time="15 Uhr" aria-pressed="false">15:00</button>
+        <button class="chip" type="button" data-time="17 Uhr" aria-pressed="false">17:00</button>
+      </div>
+      <p id="meet" class="meet" hidden>Treffpunkt um <strong id="meetTime"></strong> am Ausgang der U2 Messestadt West. Mach einen Screenshot und schick ihn mir.</p>
+    </section>
+
+    <hr class="rule">
+
+    <div class="foot">
+      <p class="small">Vielen Dank für Ihren Besuch!<br>Dieser Bon ist nicht umtauschbar.</p>
+      <div id="barcode" class="barcode" aria-hidden="true"></div>
+      <p class="code" aria-hidden="true">3110 2026 0001</p>
+      <p class="ps">PS: Samstag ist Halloween. Süßes gibt’s trotzdem.</p>
+    </div>
+
+    <div id="stamp" class="stamp" hidden>ABGEMACHT</div>
+  </div>
+</main>
+
+<script>
+(function(){
+  var ja = document.getElementById('ja');
+  var nein = document.getElementById('nein');
+  var hint = document.getElementById('hint');
+  var ask = document.getElementById('ask');
+  var done = document.getElementById('done');
+  var stamp = document.getElementById('stamp');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var labels = ["Nein", "Sicher?", "Ganz sicher?", "Überleg nochmal", "Es gibt Essen", "Ich zahle!", "Letzte Chance"];
+  var hints  = ["", "Der Nein-Knopf ist etwas scheu.", "Ja wird übrigens immer größer.", "Nur so als Info.", "Tippen bringt nichts.", "Wirklich nichts.", "Okay, ein Versuch noch."];
+  var tries = 0;
+
+  /* Barcode */
+  var bc = document.getElementById('barcode');
+  var s = 0, seed = "31102026RIEM";
+  for (var i = 0; i < seed.length; i++) s = (s * 31 + seed.charCodeAt(i)) >>> 0;
+  for (var j = 0; j < 44; j++) {
+    s = (Math.imul(s, 1103515245) + 12345) >>> 0;
+    var bar = document.createElement('span');
+    bar.style.width = (1 + (s >>> 16) % 3) + 'px';
+    bar.style.marginRight = (1 + (s >>> 8) % 3) + 'px';
+    bc.appendChild(bar);
+  }
+
+  function grow(){
+    ja.style.setProperty('--grow', Math.min(1 + tries * 0.14, 1.9));
+  }
+
+  function place(){
+    var vw = document.documentElement.clientWidth;
+    var vh = window.innerHeight;
+    var r = nein.getBoundingClientRect();
+    var jr = ja.getBoundingClientRect();
+    var pad = 20, m = 14;
+    var pick = null;
+    for (var k = 0; k < 30; k++) {
+      var x = pad + Math.random() * Math.max(0, vw - r.width - pad * 2);
+      var y = pad + 40 + Math.random() * Math.max(0, vh - r.height - pad * 2 - 80);
+      var hitsJa = x < jr.right + m && x + r.width > jr.left - m && y < jr.bottom + m && y + r.height > jr.top - m;
+      var farEnough = Math.hypot(x - r.left, y - r.top) > 90;
+      if (!hitsJa && farEnough) { pick = [x, y]; break; }
+      if (!hitsJa && !pick) pick = [x, y];
+    }
+    if (!pick) pick = [pad, pad + 40];
+    nein.style.left = pick[0] + 'px';
+    nein.style.top = pick[1] + 'px';
+  }
+
+  function dodge(e){
+    if (e) e.preventDefault();
+    tries++;
+    if (tries >= labels.length) {
+      nein.hidden = true;
+      hint.textContent = "Nein ist leider ausverkauft.";
+      grow();
+      return;
+    }
+    nein.textContent = labels[tries];
+    hint.textContent = hints[tries] || "";
+    if (!nein.classList.contains('loose')) {
+      var r0 = nein.getBoundingClientRect();
+      nein.style.left = r0.left + 'px';
+      nein.style.top = r0.top + 'px';
+      nein.classList.add('loose');
+    }
+    grow();
+    requestAnimationFrame(place);
+  }
+
+  nein.addEventListener('pointerenter', function(e){ if (e.pointerType === 'mouse') dodge(); });
+  nein.addEventListener('pointerdown', dodge);
+  nein.addEventListener('click', function(e){ e.preventDefault(); if (e.detail === 0) dodge(); });
+
+  window.addEventListener('resize', function(){
+    if (!nein.classList.contains('loose') || nein.hidden) return;
+    var r = nein.getBoundingClientRect();
+    var vw = document.documentElement.clientWidth, vh = window.innerHeight;
+    nein.style.left = Math.max(16, Math.min(r.left, vw - r.width - 16)) + 'px';
+    nein.style.top = Math.max(16, Math.min(r.top, vh - r.height - 16)) + 'px';
+  });
+
+  ja.addEventListener('click', function(){
+    nein.hidden = true;
+    ask.hidden = true;
+    done.hidden = false;
+    document.getElementById('tries').textContent = tries === 0
+      ? "Direkt Ja gesagt. Starke Leistung."
+      : "Nein-Versuche vorher: " + tries + ". Zählen nicht.";
+    stamp.hidden = false;
+    burst();
+    var first = done.querySelector('.chip');
+    if (first) first.focus({ preventScroll: true });
+  });
+
+  var meet = document.getElementById('meet');
+  var meetTime = document.getElementById('meetTime');
+  Array.prototype.forEach.call(done.querySelectorAll('.chip'), function(chip, _, all){
+    chip.addEventListener('click', function(){
+      Array.prototype.forEach.call(done.querySelectorAll('.chip'), function(c){
+        c.setAttribute('aria-pressed', c === chip ? 'true' : 'false');
+      });
+      meetTime.textContent = chip.dataset.time;
+      meet.hidden = false;
+    });
+  });
+
+  function burst(){
+    if (reduce) return;
+    var cv = document.getElementById('confetti');
+    var ctx = cv.getContext('2d');
+    if (!ctx) return;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var W = window.innerWidth, H = window.innerHeight;
+    cv.width = W * dpr; cv.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var cs = getComputedStyle(document.documentElement);
+    var cols = ['--stamp', '--gold', '--ink', '--paper'].map(function(v){ return cs.getPropertyValue(v).trim(); });
+    var parts = [];
+    for (var n = 0; n < 150; n++) {
+      parts.push({
+        x: W / 2 + (Math.random() - .5) * 80, y: H * .45,
+        vx: (Math.random() - .5) * 13, vy: -Math.random() * 13 - 4,
+        w: 6 + Math.random() * 6, h: 8 + Math.random() * 8,
+        r: Math.random() * 6.28, vr: (Math.random() - .5) * .3,
+        c: cols[Math.floor(Math.random() * cols.length)]
+      });
+    }
+    var t = 0;
+    (function frame(){
+      ctx.clearRect(0, 0, W, H);
+      for (var p = 0; p < parts.length; p++) {
+        var q = parts[p];
+        q.vy += .32; q.vx *= .99; q.x += q.vx; q.y += q.vy; q.r += q.vr;
+        ctx.save();
+        ctx.translate(q.x, q.y);
+        ctx.rotate(q.r);
+        ctx.fillStyle = q.c;
+        ctx.fillRect(-q.w / 2, -q.h / 2, q.w, q.h * Math.abs(Math.cos(q.r * 1.5)) + 1);
+        ctx.restore();
+      }
+      if (++t < 220) requestAnimationFrame(frame); else ctx.clearRect(0, 0, W, H);
+    })();
+  }
+})();
+</script>
+</body>
+</html>
