@@ -132,6 +132,8 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--pink-deep); outline
 .opt .ico.time{font-family:var(--font-display); font-weight:800; font-size:30px; color:var(--pink-deep); font-variant-numeric:tabular-nums}
 .opt .t{font-weight:800; font-size:16px; line-height:1.25}
 .opt .d{font-weight:600; font-size:13px; color:var(--ink-soft); line-height:1.3}
+.opts-time{grid-template-columns:repeat(3, minmax(0, 1fr)); gap:10px}
+.opts-time .opt{min-height:72px; padding:10px 6px}
 .navrow{display:flex; justify-content:space-between; align-items:center; width:100%; min-height:44px}
 
 /* Puppy */
@@ -391,11 +393,8 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--pink-deep); outline
 
   /* Planner */
   var steps = [
-    { key: 'zeit', day: 'Samstag', q: 'Wann fahren wir los zu den Riem Arcaden?', opts: [
-      { v: '11:00', d: 'Mittags dort, mit Mittagessen', time: true },
-      { v: '13:00', d: 'Erst gemütlich frühstücken', time: true },
-      { v: '15:00', d: 'Ganz ausgeschlafen', time: true },
-      { v: '17:00', d: 'Abends, mit Abendessen', time: true } ] },
+    { key: 'zeit', day: 'Samstag', q: 'Wann fahren wir los zu den Riem Arcaden?', compact: true, opts:
+      ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00'].map(function(t){ return { v: t, time: true }; }) },
     { key: 'essen', day: 'Samstag', q: 'Worauf hast du Hunger?', opts: [
       { v: 'Sushi', i: '🍣' }, { v: 'Burger', i: '🍔' }, { v: 'Pizza', i: '🍕' },
       { v: 'Nudeln', i: '🍜', d: 'asiatisch' }, { v: 'Döner', i: '🥙' }, { v: 'Überrasch mich', i: '🎁' } ] },
@@ -428,7 +427,7 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--pink-deep); outline
     h.tabIndex = -1;
     p.appendChild(h);
 
-    var grid = el('div', 'opts');
+    var grid = el('div', s.compact ? 'opts opts-time' : 'opts');
     grid.setAttribute('role', 'group');
     grid.setAttribute('aria-label', s.q);
     s.opts.forEach(function(o){
