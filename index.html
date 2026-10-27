@@ -298,8 +298,7 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--pink-deep); outline
         <span class="t-label">Samstag, 31.10.</span>
         <p class="t-title">Riem Arcaden</p>
         <dl>
-          <dt>Uhrzeit</dt><dd id="tZeit"></dd>
-          <dt>Treffpunkt</dt><dd>U2 Messestadt West</dd>
+          <dt>Abfahrt</dt><dd id="tZeit"></dd>
           <dt>Essen</dt><dd id="tEssen"></dd>
           <dt>Nachtisch</dt><dd id="tNach"></dd>
         </dl>
@@ -392,11 +391,11 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--pink-deep); outline
 
   /* Planner */
   var steps = [
-    { key: 'zeit', day: 'Samstag', q: 'Wann treffen wir uns in den Riem Arcaden?', opts: [
-      { v: '12:00', d: 'Mittags, mit Mittagessen', time: true },
-      { v: '14:00', d: 'Ausgeschlafen', time: true },
-      { v: '16:00', d: 'Nachmittags', time: true },
-      { v: '18:00', d: 'Abends, mit Abendessen', time: true } ] },
+    { key: 'zeit', day: 'Samstag', q: 'Wann fahren wir los zu den Riem Arcaden?', opts: [
+      { v: '11:00', d: 'Mittags dort, mit Mittagessen', time: true },
+      { v: '13:00', d: 'Erst gemütlich frühstücken', time: true },
+      { v: '15:00', d: 'Ganz ausgeschlafen', time: true },
+      { v: '17:00', d: 'Abends, mit Abendessen', time: true } ] },
     { key: 'essen', day: 'Samstag', q: 'Worauf hast du Hunger?', opts: [
       { v: 'Sushi', i: '🍣' }, { v: 'Burger', i: '🍔' }, { v: 'Pizza', i: '🍕' },
       { v: 'Nudeln', i: '🍜', d: 'asiatisch' }, { v: 'Döner', i: '🥙' }, { v: 'Überrasch mich', i: '🎁' } ] },
@@ -488,7 +487,7 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--pink-deep); outline
     $('tLook').textContent = sel.look;
     $('tJob').textContent = sel.job;
     msg = 'Abgemacht, das Wochenende ist fix! 💘\n'
-      + 'Sa 31.10., ' + sel.zeit + ' Uhr: Riem Arcaden (Treffpunkt U2 Messestadt West)\n'
+      + 'Sa 31.10.: Riem Arcaden, wir fahren um ' + sel.zeit + ' Uhr los\n'
       + 'Essen: ' + sel.essen + ' · Nachtisch: ' + sel.nachtisch + '\n'
       + 'So 01.11.: Aquarium umgestalten\n'
       + 'Look: ' + sel.look + ' · Meine Aufgabe: ' + sel.job;
