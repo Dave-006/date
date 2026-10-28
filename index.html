@@ -193,6 +193,7 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--pink-deep); outline
 .t-day dl{display:grid; grid-template-columns:auto minmax(0, 1fr); gap:5px 14px; margin:0}
 .t-day dt{font-size:14px; color:var(--ink-soft); font-weight:700}
 .t-day dd{margin:0; font-weight:800; min-width:0}
+.t-memo{margin:2px 0 0; padding:10px 14px; background:var(--pink-pale); border-radius:12px; font-weight:700; line-height:1.45; text-wrap:pretty}
 .t-stub{position:relative; display:flex; justify-content:space-between; align-items:center; gap:12px; padding:14px 20px 16px; border-top:2px dashed var(--line); font-size:13px; font-weight:700; color:var(--ink-soft)}
 .t-stub::before,.t-stub::after{content:""; position:absolute; top:-13px; width:24px; height:24px; border-radius:50%; background:var(--bg)}
 .t-stub::before{left:-12px}
@@ -302,7 +303,6 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--pink-deep); outline
         <dl>
           <dt>Abfahrt</dt><dd id="tZeit"></dd>
           <dt>Essen</dt><dd id="tEssen"></dd>
-          <dt>Nachtisch</dt><dd id="tNach"></dd>
         </dl>
       </div>
       <div class="t-day">
@@ -310,9 +310,8 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--pink-deep); outline
         <p class="t-title">Aquarium umgestalten</p>
         <dl>
           <dt>Uhrzeit</dt><dd>Sobald wir wach sind</dd>
-          <dt>Look</dt><dd id="tLook"></dd>
-          <dt>Deine Aufgabe</dt><dd id="tJob"></dd>
         </dl>
+        <p class="t-memo">Ich habe Soil gekauft. Wenn du noch was willst, sag es mir. Überleg dir bitte bis Sonntag ein Design.</p>
       </div>
       <div class="t-stub">
         <span>Gültig für 2 Personen<br>Nicht stornierbar</span>
@@ -345,7 +344,7 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--pink-deep); outline
   var reduce = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 
   /* Ja / Nein */
-  var neinLabels = ["Nein", "Bist du sicher?", "Wirklich sicher?", "Denk nochmal nach!", "Bitte bitte?", "Ich lad dich ein!", "Auch zum Nachtisch!", "Okay, letzte Chance"];
+  var neinLabels = ["Nein", "Bist du sicher?", "Wirklich sicher?", "Denk nochmal nach!", "Bitte bitte?", "Ich lad dich ein!", "Das Aquarium wartet!", "Okay, letzte Chance"];
   var subs = ["", "Okay… kein Stress.", "Hmm. Wirklich jetzt?", "Mein Herz bröckelt gerade.", "Ich hab extra eine Website gebaut…", "Jetzt weint der Hund.", "Ja wird übrigens immer größer.", "Du weißt, was zu tun ist."];
   var moods = ["0", "1", "2", "3", "3", "4", "5", "5"];
   var no = 0;
@@ -397,22 +396,7 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--pink-deep); outline
       ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00'].map(function(t){ return { v: t, time: true }; }) },
     { key: 'essen', day: 'Samstag', q: 'Worauf hast du Hunger?', opts: [
       { v: 'Sushi', i: '🍣' }, { v: 'Burger', i: '🍔' }, { v: 'Pizza', i: '🍕' },
-      { v: 'Nudeln', i: '🍜', d: 'asiatisch' }, { v: 'Döner', i: '🥙' }, { v: 'Überrasch mich', i: '🎁' } ] },
-    { key: 'nachtisch', day: 'Samstag', q: 'Und zum Nachtisch?', opts: [
-      { v: 'Waffeln', i: '🧇' }, { v: 'Bubble Tea', i: '🧋' }, { v: 'Donuts', i: '🍩' },
-      { v: 'Eis', i: '🍦', d: 'auch im Oktober' }, { v: 'Kuchen', i: '🍰' }, { v: 'Schokolade', i: '🍫' } ] },
-    { key: 'look', day: 'Sonntag', q: 'Wie soll das Aquarium danach aussehen?', opts: [
-      { v: 'Pflanzen-Dschungel', i: '🌿', d: 'ganz viel Grün' },
-      { v: 'Steine & Höhlen', i: '🪨', d: 'Verstecke für alle' },
-      { v: 'Wurzeln & Sand', i: '🪵', d: 'schön natürlich' },
-      { v: 'Bunt & verspielt', i: '🐠', d: 'mit Deko' },
-      { v: 'Versunkene Ruine', i: '🏛️', d: 'mit Tempel-Deko' },
-      { v: 'Du entscheidest', i: '🤝', d: 'ich vertrau dir' } ] },
-    { key: 'job', day: 'Sonntag', q: 'Welche Aufgabe übernimmst du?', opts: [
-      { v: 'Pflanzen setzen', i: '🌱' },
-      { v: 'Deko platzieren', i: '🐚' },
-      { v: 'Wasser schleppen', i: '🪣', d: 'sehr mutig' },
-      { v: 'Bauleitung', i: '📋', d: 'zeigen und loben' } ] }
+      { v: 'Nudeln', i: '🍜', d: 'asiatisch' }, { v: 'Döner', i: '🥙' }, { v: 'Überrasch mich', i: '🎁' } ] }
   ];
   var sel = {};
   var busy = false;
@@ -482,14 +466,10 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--pink-deep); outline
   function showDone(){
     $('tZeit').textContent = sel.zeit + ' Uhr';
     $('tEssen').textContent = sel.essen;
-    $('tNach').textContent = sel.nachtisch;
-    $('tLook').textContent = sel.look;
-    $('tJob').textContent = sel.job;
     msg = 'Abgemacht, das Wochenende ist fix! 💘\n'
       + 'Sa 31.10.: Riem Arcaden, wir fahren um ' + sel.zeit + ' Uhr los\n'
-      + 'Essen: ' + sel.essen + ' · Nachtisch: ' + sel.nachtisch + '\n'
-      + 'So 01.11.: Aquarium umgestalten\n'
-      + 'Look: ' + sel.look + ' · Meine Aufgabe: ' + sel.job;
+      + 'Essen: ' + sel.essen + '\n'
+      + 'So 01.11.: Aquarium umgestalten, ich überleg mir ein Design';
     $('wa').href = 'https://wa.me/?text=' + encodeURIComponent(msg);
     $('msgbox').hidden = true;
     $('copy').textContent = 'Text kopieren';
